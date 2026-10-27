@@ -2,13 +2,24 @@ from pathlib import Path
 from zipfile import ZipFile
 import time
 import re
+import shutil
 
-# Change this to your active CCC edition folder.
-EDITION_DIR = Path(r"C:\Programming\CCC\42th Edition")
-# EDITION_DIR = Path(r"C:\Programming\CCC\Practice\ASTEROID_MINING")
+# EDIT: Change this to your active CCC edition folder.
+EDITION_DIR = Path(r"C:\Programming\CCC\Testing\Edition X")
+# WARNING: This script will modify the contents of the EDITION_DIR.
+# Make sure you have a backup before running it.
 
+# Set to False if you don't want the .cpp template to be created with each level's extraction.
+insert_cpp_template = True
+
+# Regular expression to match level-N.zip files, case-insensitive.
 LEVEL_ZIP_PATTERN = re.compile(r"^level-(\d+)\.zip$", re.IGNORECASE)
+# INFO: Does not require tinkering when used with CCC's official downloads.
 
+# Path to the C++ template file. This file will be copied into each level's folder if insert_cpp_template is True.
+TEMPLATE_FILE = Path(__file__).with_name("template.cpp")
+
+# Folder to monitor for new Downloads
 DOWNLOADS_DIR = Path.home() / "Downloads"
 POLL_SECONDS = 2
 STABLE_CHECKS_REQUIRED = 3
@@ -61,14 +72,39 @@ def safe_extract(zip_path: Path, destination: Path):
         archive.extractall(destination)
 
 def main():
+    # Check for the Downlods folder
+    if not DOWNLOADS_DIR.is_dir():
+        raise SystemExit(f"Downloads folder not found: {DOWNLOADS_DIR}, Exiting.")
+
+    # Check for the edition folder and create it if it doesn't exist
     if not EDITION_DIR.is_dir():
-        raise SystemExit(f"Edition folder not found: {EDITION_DIR}")
+        print(f"Edition folder not found: {EDITION_DIR}")
+        makedirs = input(f"Do you want to create it? (y/n): ").strip().lower()
+        if makedirs == 'y':
+            EDITION_DIR.mkdir(parents=True, exist_ok=True)
+            print(f"Created edition folder: {EDITION_DIR}")
+            if not EDITION_DIR.is_dir():
+                raise SystemExit(f"Failed to create edition folder: {EDITION_DIR}, Exiting.")
+        else:
+            raise SystemExit(f"Edition folder unavailable: {EDITION_DIR}, Exiting.")
+
+
+    # Check for the template file if use_cpp_template is True
+    use_cpp_template = insert_cpp_template
+    if use_cpp_template and not TEMPLATE_FILE.is_file():
+        print(f"Template file not found: {TEMPLATE_FILE}")
+        giveup_template = input("Do you want to continue without automatic .cpp template creation? (y/n):").strip().lower()
+        if giveup_template == 'y':
+            use_cpp_template = False
+            print(f"Continuing without automatic .cpp template creation.")
+        else:
+            raise SystemExit(f"Make sure the template file exists: {TEMPLATE_FILE}, Exiting.")
 
     # Don't process ZIPs that were already in Downloads when the watcher started.
     seen = {p.resolve() for p in DOWNLOADS_DIR.glob("*.zip")}
 
     print(f"Watching: {DOWNLOADS_DIR}")
-    print(f"Edition:  {EDITION_DIR}")
+    print(f"Extracting into:  {EDITION_DIR}")
     print("Waiting for newly downloaded level-N.zip files. Press Ctrl+C to stop.")
 
     while True:
@@ -90,12 +126,20 @@ def main():
                 safe_extract(zip_path, destination)
                 print(f"Extracted to: {destination}")
 
-                source_file = level_dir / f"level_{level}.cpp"
-                try:
-                    source_file.touch(exist_ok=False)
-                    print(f"Created source file: {source_file}")
-                except FileExistsError:
-                    print(f"Source file already exists, leaving it unchanged: {source_file}")
+                if use_cpp_template:
+                    source_file = level_dir / f"level_{level}.cpp"
+
+                    try:
+                        if source_file.exists():
+                            raise FileExistsError(source_file)
+
+                        shutil.copy2(TEMPLATE_FILE, source_file)
+                        print(f"Created source file: {source_file}")
+                    except FileExistsError:
+                        print(f"Source file already exists, leaving it unchanged: {source_file}")
+                    except Exception as error:
+                        print(f"Could not create source file: {error}")
+
             except FileExistsError as error:
                 print(f"Skipped to avoid overwriting: {error}")
             except Exception as error:
