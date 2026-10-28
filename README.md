@@ -2,7 +2,7 @@
 
 A small collection of utilities I built while taking part in the [CloudFlight Coding Contest](https://codingcontest.org).
 
-The goal is simple: remove the repetitive setup work so I can focus on reading the input, solving the problem, and writing the output. The tools currently focus on C++, but if it isn't your programming of choice, I still incurage you to checkuout the [python script](tools/watch_ccc_downloads.py). Over time I might update the tools to suport multiple programming languages. Any contributtions to suport this goal are welcome.
+The goal is simple: remove the repetitive setup work so I can focus on reading the input, solving the problem, and writing the output. The tools currently focus on C++, but if it isn't your programming of choice, I still encourage you to check out the [python script](tools/watch_ccc_downloads.py). Over time I might update the tools to suport multiple programming languages. Any contributtions to suport this goal are welcome.
 
 All the code in [`tools/`](tools/) is commented and intended to be easy to adjust. Have fun tinkering with it, and good luck with the contest!
 
