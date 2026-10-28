@@ -55,7 +55,7 @@ Feel free to adjust these values to match your setup.
 
 ### 2. Configure your setup
 
-In my current setup, I use a custom VSCode profile that opens automatically when I am working inside the CCC folder. The profile has the [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) extension to easily run the C++ soulution for each level. Also, it has the [PDF Viewer](https://marketplace.visualstudio.com/items?itemName=mathematic.vscode-pdf) extention to be able to read each level requiremnts directly inside VSCode. I recommend you use the same setup but none of these extentions are required.
+In my current setup, I use a custom VSCode profile that opens automatically when I am working inside the CCC folder. The profile has the [Code Runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner) extension to easily run the C++ soulution for each level, and the [PDF Viewer](https://marketplace.visualstudio.com/items?itemName=mathematic.vscode-pdf) extention to be able to read each level requiremnts directly inside VSCode. I recommend you use the same setup but none of these extentions are required.
 
 #### Option 1: Code Runner
 Install the extension and add the following configuration to the workspace file `.vscode/settings.json`:
