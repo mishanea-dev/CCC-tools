@@ -7,7 +7,6 @@ import shutil
 # EDIT: Change this to your active CCC edition folder.
 EDITION_DIR = Path(r"C:\Programming\CCC\Testing\Edition X")
 # WARNING: This script will modify the contents of the EDITION_DIR.
-# Make sure you have a backup before running it.
 
 # Set to False if you don't want the .cpp template to be created with each level's extraction.
 insert_cpp_template = True

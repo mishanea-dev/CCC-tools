@@ -17,6 +17,23 @@ All the code in [`tools/`](tools/) is commented and intended to be easy to adjus
 - A download watcher that automatically extracts newly downloaded CCC levels.
 - C++ templates and previous contest/practice solutions.
 
+
+## Repository structure
+
+```text
+CCC/
+├── Solutions/
+│   ├── Participation Results/   # My real time solutions during contests
+│   └── Practice/                # Solutions for past CCC problems
+├── tools/
+│   ├── CCCrunner.h              # Test runner library
+│   ├── runner_main.h            # Runner entry point
+│   ├── template.cpp             # C++ starting template
+│   └── watch_ccc_downloads.py   # Automatic level downloader
+└── README.md
+```
+
+
 ## Quick start
 
 Firstly you need to download this repository. It can also act as your coding directory during the contest and the practice runs.
@@ -141,23 +158,6 @@ The runner will process every matching input file and write the generated answer
 
 Batch mode disables debug output and prints a short status for every test case.
 
-
-
-## Repository structure
-
-```text
-CCC/
-├── Solutions/
-│   ├── Participation Results/   # My previous contest solutions
-│   └── Practice/                # Solutions for past CCC problems
-├── Testing/                     # Active contest levels
-├── tools/
-│   ├── CCCrunner.h              # Test runner library
-│   ├── runner_main.h            # Runner entry point
-│   ├── template.cpp             # C++ starting template
-│   └── watch_ccc_downloads.py   # Automatic level downloader
-└── README.md
-```
 
 ## Troubleshooting
 
