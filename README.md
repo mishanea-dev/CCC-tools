@@ -14,8 +14,8 @@ All the code in [`tools/`](tools/) is commented and intended to be easy to adjus
   - Compares the output with the expected answer.
   - Runs a solution against all test cases in batch mode.
   - Writes batch results into a separate `results` folder.
+- C++ templates and previous contest solutions.
 - A download watcher that automatically extracts newly downloaded CCC levels.
-- C++ templates and previous contest/practice solutions.
 
 
 ## Repository structure
