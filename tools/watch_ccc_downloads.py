@@ -8,6 +8,9 @@ import shutil
 EDITION_DIR = Path(r"C:\Programming\CCC\Testing\Edition X")
 # WARNING: This script will modify the contents of the EDITION_DIR.
 
+# Set to False if you want to keep the ZIP files after extraction.
+delete_zip_after_extract = True  
+
 # Set to False if you don't want the .cpp template to be created with each level's extraction.
 insert_cpp_template = True
 
@@ -69,6 +72,7 @@ def safe_extract(zip_path: Path, destination: Path):
                 raise FileExistsError(f"File already exists: {output_path}")
 
         archive.extractall(destination)
+
 
 def main():
     # Check for the Downlods folder
@@ -143,6 +147,13 @@ def main():
                 print(f"Skipped to avoid overwriting: {error}")
             except Exception as error:
                 print(f"Could not extract {zip_path.name}: {error}")
+
+            if delete_zip_after_extract:
+                try:
+                    zip_path.unlink()
+                    print(f"Deleted: {zip_path.name}")
+                except Exception as error:
+                    print(f"Could not delete {zip_path.name}: {error}")
 
             seen.add(zip_path.resolve())
 
